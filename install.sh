@@ -307,19 +307,20 @@ sudo /etc/init.d/shairport-sync start
 }
 #############################################################################
 
-install_ (){
+install_Netatalk (){
 #############################################################################
-#Install USB temperature sensor
-apt-get -y install libusb-dev libusb-1.0-0-dev
-wget https://github.com/igorpecovnik/Debian-micro-home-server/blob/master/src/temper_v14_altered.tgz
-tar xvfz temper_v14_altered.tgz
-cd temperv14
-make
-make rules-install
-cp temperv14 /usr/bin/temper
+#Install Netatalk
+apt-get install avahi-daemon
+apt-get install netatalk
 }
 #############################################################################
 
+install_Netatalk (){
+#############################################################################
+#Install Netatalk
+apt-get install hfsplus hfsutils hfsprogs
+}
+#############################################################################
 
 SECTION="Basic configuration"
 #
@@ -344,6 +345,8 @@ exitstatus=$?; if [ $exitstatus = 1 ]; then exit 1; fi
 
 
 install_basic
+install_hfs+
+install_Netatalk
 #install_samba
 install_rpimonitor
 #install_temper
