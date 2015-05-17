@@ -28,10 +28,6 @@ cat >> /etc/hosts <<EOF
 ${serverIP} ${HOSTNAMEFQDN} ${HOSTNAMESHORT}
 EOF
 
-#New User
-adduser Cubietruck
-usermod -aG sudo Cubietruck
-
 
 echo "$HOSTNAMESHORT" > /etc/hostname
 /etc/init.d/hostname.sh start >/dev/null 2>&1
@@ -310,15 +306,22 @@ sudo /etc/init.d/shairport-sync start
 install_Netatalk (){
 #############################################################################
 #Install Netatalk
-apt-get install avahi-daemon
+apt-get install avahi-daemon libavahi-client-dev libdb-dev db-util libgcrypt11 libgcrypt11-dev
 apt-get install netatalk
 }
 #############################################################################
 
-install_Netatalk (){
+install_HFS (){
 #############################################################################
-#Install Netatalk
+#Install HFS+
 apt-get install hfsplus hfsutils hfsprogs
+}
+#############################################################################
+
+install_Seafile (){
+#############################################################################
+#Install Seafile
+apt-get install python2.7 python-setuptools python-simplejson python-imaging sqlite3
 }
 #############################################################################
 
@@ -345,9 +348,18 @@ exitstatus=$?; if [ $exitstatus = 1 ]; then exit 1; fi
 
 
 install_basic
-install_hfs+
+install_hfs
 install_Netatalk
+#install_Seafile
 #install_samba
+#install_rpimonitor
 #install_temper
+install_Virus
+install_scaner_and_scanbuttons
+install_ocr
+install_cups
 #apt-get -y install socat
+install_ShairportSync
+install_HMLAND
+install_FHEM
 #reboot
