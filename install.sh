@@ -348,14 +348,6 @@ install_basic
 install_hfs+
 install_Netatalk
 #install_samba
-install_rpimonitor
 #install_temper
-#install_Virus
-#install_scaner_and_scanbuttons
-#install_ocr
-#install_cups
 #apt-get -y install socat
-#install_ShairportSync
-#install_HMLAND
-#install_FHEM
 #reboot
