@@ -886,7 +886,7 @@ cat > /etc/netatalk/afpd.conf <<"EOF"
 #
 # default:
 # - -tcp -noddp -uamlist uams_dhx.so,uams_dhx2.so -nosavepassword
-- -tcp -noddp -uamlist uams_dhx2.so -nosavepassword
+- -tcp -noddp -uamlist uams_dhx2.so -savepassword -mimicmodel TimeCapsule
 
 EOF
 
@@ -1059,7 +1059,7 @@ cat > /etc/netatalk/AppleVolumes.default <<"EOF"
 #
 
 # The line below sets some DEFAULT, starting with Netatalk 2.1.
-:DEFAULT: options:upriv,usedots
+#:DEFAULT: options:upriv,usedots
 
 # By default all users have access to their home directories.
 #~/			"Home Directory"
@@ -1068,24 +1068,7 @@ cat > /etc/netatalk/AppleVolumes.default <<"EOF"
 /mnt/TimeCapsule TimeCapsule options:tm,usedots,upriv
 
 EOF
-#TimeCaspule Logo
-cat > /etc/avahi/services/afpd.service <<"EOF"
-<?xml version="1.0" standalone='no'?><!--*-nxml-*-->
-<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-<service-group>
-    <name replace-wildcards="yes">%h</name>
-    <service>
-        <type>_afpovertcp._tcp</type>
-        <port>548</port>
-    </service>
-    <service>
-        <type>_device-info._tcp</type>
-        <port>0</port>
-        <txt-record>model=TimeCapsule</txt-record>
-    </service>
-</service-group>
 
-EOF
 service netatalk restart
 service avahi-daemon restart
 }
