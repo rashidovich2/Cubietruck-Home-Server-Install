@@ -1,0 +1,65 @@
+Benutzer anlegen:
+1) adduser cubie
+2) usermod -aG sudo cubie
+
+
+Home Server Installation
+1) service ramlog disable
+2) reboot
+
+3) sudo apt-get -y install git
+4) git clone https://github.com/Spezialtrick/Cubietruck-Home-Server-Install
+5) chmod +x ./Cubietruck-Home-Server-Install/install.sh
+6) cd ./Cubietruck-Home-Server-Install
+7) sudo ./install.sh
+
+
+Festplatte:
+1) sudo fdisk /dev/sda
+2) n, p, 1, enter, enter, w
+3) sudo mkfs.ext4 /dev/sda1
+4) 							sudo mkdir /mnt/TimeCapsule
+4) 							sudo mount /dev/sda1 /mnt/TimeCapsule
+5) ls -l /dev/disk/by-uuid/
+6) UUID notieren —> sda1
+7) 							sudo nano /etc/fstab
+8) 							UUID=986f807d-c199-4e02-9d44-f640dd0545b5 /mnt/TimeCapsule ext4 defaults 0 0
+
+Time Machine:
+1) 							sudo chown -R cubie.users /mnt/TimeCapsule
+2) 							sudo chmod 777 /mnt/TimeCapsule
+3) 							sudo nano /etc/netatalk/afpd.conf
+4) 							Ergänzen: - -tcp -noddp -uamlist uams_dhx2.so -nosavepassword
+5) 							sudo nano /etc/netatalk/AppleVolumes.default
+6) 							Ergänzen: /mnt/TimeCapsule TimeCapsule options:tm,usedots,upriv service
+7) 							Mit # auskommentieren ~/                      "Home Directory"
+8) 							sudo service netatalk restart
+
+Audio auf Toslink:
+1) 	sudo nano /etc/modules
+2) 	Ergänzen: 	sndspdif
+			sunxi-sndspdif
+			sunxi-spdif
+			sunxi-spdma
+3) 	sudo nano /etc/asound.conf 
+4) 	Ergänzen:    	pcm.!default {
+			type hw
+			card 1
+			device 0
+			}
+			ctl.!default {
+			type hw
+			card 1
+			}
+
+Shairport umbenennen:
+1) 			sudo service shairport-sync stop
+2) 			sudo nano /etc/init.d/shairport-sync
+3) 			In Zeile 60 (start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- -d || return 2) hinter -d 
+			einfach -a "HierNamenEingeben" einfügen
+4) 			Ctrl+X zum schließen mit Y speichern bestätigen
+5) 			sudo service shairport-sync start
+
+Es fehlt noch:
+
+- Seafile
