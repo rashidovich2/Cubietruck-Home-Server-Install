@@ -1068,6 +1068,26 @@ cat > /etc/netatalk/AppleVolumes.default <<"EOF"
 /mnt/TimeCapsule TimeCapsule options:tm,usedots,upriv
 
 EOF
+
+cat > /etc/avahi/services/afpd.service <<"EOF"
+<?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+    <name replace-wildcards="yes">%h</name>
+    <service>
+        <type>_afpovertcp._tcp</type>
+        <port>548</port>
+    </service>
+    <service>
+        <type>_device-info._tcp</type>
+        <port>0</port>
+        <txt-record>model=TimeCapsule</txt-record>
+    </service>
+</service-group>
+
+EOF
+service netatalk restart
+service avahi-daemon restart
 }
 #############################################################################
 
