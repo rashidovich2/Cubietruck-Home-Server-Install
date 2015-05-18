@@ -28,6 +28,27 @@ cat >> /etc/hosts <<EOF
 ${serverIP} ${HOSTNAMEFQDN} ${HOSTNAMESHORT}
 EOF
 
+cat >> /etc/rc.local <<EOF
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+#/usr/bin/scanbuttond
+echo cpu0 > /sys/class/leds/white:ph11:led3/trigger
+echo cpu1 > /sys/class/leds/green:ph07:led4/trigger
+echo disk-activity > /sys/class/leds/blue:ph21:led1/trigger
+echo usb-online > /sys/class/leds/orange:ph20:led2/trigger
+
+exit 0
+EOF
 
 echo "$HOSTNAMESHORT" > /etc/hostname
 /etc/init.d/hostname.sh start >/dev/null 2>&1
@@ -1133,9 +1154,9 @@ install_Netatalk
 #install_samba
 #install_rpimonitor
 #install_temper
-install_Virus
-install_scaner_and_scanbuttons
-install_ocr
+#install_Virus
+#install_scaner_and_scanbuttons
+#install_ocr
 install_cups
 #apt-get -y install socat
 install_AudioOutonToslink
