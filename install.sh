@@ -232,7 +232,7 @@ sudo cpan -i WWW::Jawbone::Up
 
 install_HMLAND () {
 cd /opt/
-apt-get install build-essential libusb-1.0-0-dev make gcc git-core
+apt-get -y install build-essential libusb-1.0-0-dev make gcc git-core
 git clone git://git.zerfleddert.de/hmcfgusb
 cd hmcfgusb
 make
@@ -1143,6 +1143,7 @@ exitstatus=$?; if [ $exitstatus = 1 ]; then exit 1; fi
 
 
 install_basic
+install_MountExistingHdd
 install_hfs
 install_Netatalk
 #install_Seafile
