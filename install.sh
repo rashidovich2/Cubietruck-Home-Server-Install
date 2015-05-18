@@ -1068,7 +1068,7 @@ cat > /etc/netatalk/AppleVolumes.default <<"EOF"
 /mnt/TimeCapsule TimeCapsule options:tm,usedots,upriv
 
 EOF
-
+#TimeCaspule Logo
 cat > /etc/avahi/services/afpd.service <<"EOF"
 <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
 <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
