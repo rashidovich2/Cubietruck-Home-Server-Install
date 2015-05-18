@@ -41,7 +41,7 @@ cat >> /etc/rc.local <<EOF
 # bits.
 #
 # By default this script does nothing.
-#/usr/bin/scanbuttond
+
 echo cpu0 > /sys/class/leds/white:ph11:led3/trigger
 echo cpu1 > /sys/class/leds/green:ph07:led4/trigger
 echo disk-activity > /sys/class/leds/blue:ph21:led1/trigger
