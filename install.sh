@@ -284,10 +284,10 @@ service hmland start
 install_ShairportSync (){
 #############################################################################
 #Install ShairportSync
-apt-get install build-essential
-apt-get install avahi-daemon autoconf libtool libdaemon-dev libssl-dev libavahi-client-dev libasound2-dev
-apt-get install libpopt-dev
-apt-get install mpd
+apt-get -y install build-essential
+apt-get -y install avahi-daemon autoconf libtool libdaemon-dev libssl-dev libavahi-client-dev libasound2-dev
+apt-get -y install libpopt-dev
+apt-get -y install mpd
 cd /opt
 git clone https://github.com/mikebrady/shairport-sync.git
 cd /opt/shairport-sync
@@ -527,8 +527,8 @@ EOF
 install_Netatalk (){
 #############################################################################
 #Install Netatalk
-apt-get install avahi-daemon libavahi-client-dev libdb-dev db-util libgcrypt11 libgcrypt11-dev
-apt-get install netatalk
+apt-get -y install avahi-daemon libavahi-client-dev libdb-dev db-util libgcrypt11 libgcrypt11-dev
+apt-get -y install netatalk
 sudo chmod 777 /mnt/TimeCapsule
 sudo chown -R cubie.users /mnt/TimeCapsule
 cat > /etc/netatalk/afpd.conf <<"EOF"
@@ -1094,7 +1094,7 @@ service avahi-daemon restart
 install_HFS (){
 #############################################################################
 #Install HFS+
-apt-get install hfsplus hfsutils hfsprogs
+apt-get -y install hfsplus hfsutils hfsprogs
 }
 #############################################################################
 
@@ -1116,7 +1116,7 @@ EOF
 install_Seafile (){
 #############################################################################
 #Install Seafile
-apt-get install python2.7 python-setuptools python-simplejson python-imaging sqlite3
+apt-get -y install python2.7 python-setuptools python-simplejson python-imaging sqlite3
 }
 #############################################################################
 
