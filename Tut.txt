@@ -14,6 +14,9 @@ Home Server Installation
 7) sudo ./install.sh
 
 
+Fertig
+
+
 Festplatte:
 1) sudo fdisk /dev/sda
 2) n, p, 1, enter, enter, w
@@ -22,8 +25,8 @@ Festplatte:
 4) 							sudo mount /dev/sda1 /mnt/TimeCapsule
 5) ls -l /dev/disk/by-uuid/
 6) UUID notieren —> sda1
-7) 							sudo nano /etc/fstab
-8) 							UUID=986f807d-c199-4e02-9d44-f640dd0545b5 /mnt/TimeCapsule ext4 defaults 0 0
+7) 					sudo nano /etc/fstab
+8) 					UUID=e5d7c930-f75c-49ad-9a5a-a56bbdd1f725 /mnt/TimeCapsule ext4 defaults 0 0
 
 Time Machine:
 1) 							sudo chown -R cubie.users /mnt/TimeCapsule

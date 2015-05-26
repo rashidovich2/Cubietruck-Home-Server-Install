@@ -28,7 +28,15 @@ cat >> /etc/hosts <<EOF
 ${serverIP} ${HOSTNAMEFQDN} ${HOSTNAMESHORT}
 EOF
 
-cat >> /etc/rc.local <<EOF
+echo "$HOSTNAMESHORT" > /etc/hostname
+/etc/init.d/hostname.sh start >/dev/null 2>&1
+}
+#############################################################################
+
+install_Cubie_Leds (){
+#############################################################################
+#Install Leds - Config yourself
+cat > /etc/rc.local <<EOF
 #!/bin/sh -e
 #
 # rc.local
@@ -49,9 +57,6 @@ echo usb-online > /sys/class/leds/orange:ph20:led2/trigger
 
 exit 0
 EOF
-
-echo "$HOSTNAMESHORT" > /etc/hostname
-/etc/init.d/hostname.sh start >/dev/null 2>&1
 }
 #############################################################################
 
@@ -164,6 +169,7 @@ sed -e 's/<Location \/admin>/<Location \/admin>\nallow $SUBNET/g' -i /etc/cups/c
 sed -e 's/<Location \/admin\/conf>/<Location \/admin\/conf>\nallow $SUBNET/g' -i /etc/cups/cupsd.conf
 service cups restart
 service samba restart
+sudo adduser cubie lpadmin
 } 
 #############################################################################
 
@@ -236,7 +242,7 @@ install_FHEM (){
 #############################################################################
 #Install PERL
 #apt-get install -f
-apt-get -y install perl libdevice-serialport-perl libio-socket-ssl-perl libwww-perl
+apt-get -y install perl libdevice-serialport-perl libio-socket-ssl-perl libwww-perl libmath-round-perl 
 #
 #Install FHEM 5.5
 cd /tmp
@@ -1111,14 +1117,23 @@ sudo mount /dev/sda1 /mnt/TimeCapsule
 cat > /etc/fstab <<"EOF"
 # UNCONFIGURED FSTAB FOR BASE SYSTEM
 /dev/mmcblk0p1  /           ext4    defaults,noatime,nodiratime,data=writeback,commit=600,errors=remount-ro        0       0
-UUID=986f807d-c199-4e02-9d44-f640dd0545b5 /mnt/TimeCapsule ext4 defaults 0 0
+UUID=efa0d573-261b-4954-8e7c-b80a05d385ba /mnt/TimeCapsule ext4 defaults 0 0
 
 EOF
 }
 #############################################################################
 
-install_Seafile (){
+install_Seafile_NginX_MySQL_PHP (){
 #############################################################################
+#Install Nginx
+apt-get -y install nginx
+/etc/init.d/nginx start
+#Install MySQL
+apt-get -y install mysql-server
+#Install PHP
+apt-get -y install php5-fpm
+apt-get -y install php5-mysql
+apt-get -y install php-apc
 #Install Seafile
 apt-get -y install python2.7 python-setuptools python-simplejson python-imaging sqlite3
 }
@@ -1147,19 +1162,20 @@ exitstatus=$?; if [ $exitstatus = 1 ]; then exit 1; fi
 
 
 install_basic
-install_MountExistingHdd
+#install_MountExistingHdd			#Only for Cubietruck - SATA
 install_hfs
 install_Netatalk
-#install_Seafile
+#install_Seafile					#Not ready
 #install_samba
-#install_rpimonitor
+install_rpimonitor
 #install_temper
 #install_Virus
 #install_scaner_and_scanbuttons
 #install_ocr
 install_cups
-#apt-get -y install socat
-install_AudioOutonToslink
+apt-get -y install socat
+install_Cubie_Leds 					#Only for Cubietruck
+#install_AudioOutonToslink			#Only for Cubietruck
 install_ShairportSync
 install_HMLAND
 install_FHEM
